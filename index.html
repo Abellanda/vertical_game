@@ -125,7 +125,7 @@
             <img
               src="assets/caza.webp"
               alt="¡PREPÁRATE PARA SER DUEÑO DEL CIELO!"
-              style="width: clamp(140px, 20%, 400px)" />
+              style="width: clamp(140px, 50%, 400px)" />
           </div>
 
           <div id="subtitle" class="boxLigth">
@@ -468,6 +468,8 @@
             groundFront: "assets/base.webp", // base frontal
             star: "assets/Star.webp",
             starBonus: "assets/GoodCloud.webp",
+            groundMobile: "assets/BaseFront.webp",
+            groundFrontMobile: "assets/basemobile.webp",
             obstacle: "assets/Rayo.webp",
             meteor: "assets/meteorito.webp",
             bird: "assets/BadCloud.webp",
@@ -493,8 +495,16 @@
           }
           const img = {
             bg: loadImage(assets.bg),
-            ground: loadImage(assets.ground),
-            groundFront: loadImage(assets.groundFront),
+            ground: loadImage(
+              IS_VERTICAL && assets.groundMobile
+                ? assets.groundMobile
+                : assets.ground
+            ),
+            groundFront: loadImage(
+              IS_VERTICAL && assets.groundFrontMobile
+                ? assets.groundFrontMobile
+                : assets.groundFront
+            ),
             star: loadImage(assets.star),
             starBonus: loadImage(assets.starBonus),
             obstacle: loadImage(assets.obstacle),
@@ -511,7 +521,7 @@
           const G = {
             gravity: IS_VERTICAL ? 2600 : 2200,
             jumpV: IS_VERTICAL ? 980 : 860,
-            groundY: () => (IS_VERTICAL ? V.H * 0.9 : V.H * 0.78),
+            groundY: () => (IS_VERTICAL ? V.H * 0.86 : V.H * 0.78),
             baseSpeed: 290,
             maxSpeed: 1000,
             speedUpEach: 14,
@@ -534,14 +544,17 @@
           const BONUS_SIZE = { collisionR: 22, visualW: 3, visualH: 1.2 };
 
           function itemYRange() {
-            return IS_VERTICAL
-              ? [V.H * 0.56, V.H * 0.84]
-              : [V.H * 0.5, V.H * 0.72];
+            const gy = G.groundY(); // piso actual
+            const marginTop = IS_VERTICAL ? V.H * 0.34 : V.H * 0.28; // “altura” donde pueden aparecer
+            const marginBottom = IS_VERTICAL ? V.H * 0.06 : V.H * 0.08;
+            return [gy - marginTop, gy - marginBottom];
           }
+
           function birdYRange() {
-            return IS_VERTICAL
-              ? [V.H * 0.58, V.H * 0.72]
-              : [V.H * 0.52, V.H * 0.64];
+            const gy = G.groundY();
+            const top = IS_VERTICAL ? V.H * 0.24 : V.H * 0.2;
+            const bot = IS_VERTICAL ? V.H * 0.12 : V.H * 0.14;
+            return [gy - (top + bot), gy - bot];
           }
 
           // Frases
@@ -710,16 +723,21 @@
           function applyLayerHeights() {
             if (!S) return;
 
-            const frontH = IS_VERTICAL ? Math.round(V.H * 0.165) : 120; // base.webp
-            const backH = IS_VERTICAL ? Math.round(V.H * 0.175) : 120; // BaseFront.webp
-            if (S) {
-              S.front.h = frontH;
-              S.front.y = G.groundY();
-              S.groundScroll.h = backH;
-              S.groundScroll.y = IS_VERTICAL
-                ? Math.round(V.H * 0.76)
-                : Math.round(V.H * 0.66);
-            }
+            // Alturas de las bandas base (ajusta al gusto)
+            const frontH = IS_VERTICAL ? Math.round(V.H * 0.155) : 120; // base.webp
+            const backH = IS_VERTICAL ? Math.round(V.H * 0.165) : 120; // BaseFront.webp
+
+            const gy = G.groundY();
+
+            // La base frontal “se sienta” en el piso
+            S.front.h = frontH;
+            S.front.y = gy;
+
+            // La franja trasera un poco por encima para dar profundidad
+            S.groundScroll.h = backH;
+            S.groundScroll.y = Math.round(
+              gy - (IS_VERTICAL ? Math.max(20, frontH * 0.55) : 40)
+            );
           }
 
           function reset() {
@@ -868,7 +886,10 @@
                   flap: 0,
                 });
               } else {
-                const startX = rand(V.W * 0.7, V.W + 80);
+                const startX = IS_VERTICAL
+                  ? rand(V.W * 0.85, V.W + 120)
+                  : rand(V.W * 0.7, V.W + 80);
+
                 const startY = rand(
                   IS_VERTICAL ? -60 : -120,
                   IS_VERTICAL ? 40 : -40
@@ -877,6 +898,7 @@
                   fall = rand(280, 380);
                 const destH = 26 * 2.3,
                   destW = destH * METEOR_AR;
+
                 S.obs.push({
                   type: "meteor",
                   x: startX,
@@ -890,6 +912,7 @@
                   rr: 0.18,
                 });
               }
+
               S.lastObs = 0;
             }
           }
@@ -1260,7 +1283,7 @@
               im.loading = "lazy";
               im.style.display = "block";
               im.style.margin = "12px auto 0";
-              im.style.maxWidth = "clamp(140px,20%,400px)";
+              im.style.maxWidth = "clamp(140px,50%,400px)";
               im.style.height = "auto";
               titleEl.replaceChildren(im);
             }

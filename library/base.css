@@ -226,8 +226,7 @@ canvas {
 
 #title img {
     display: block;
-    margin: 12px auto 0;
-    max-width: min(92vw, 480px);
+    width: clamp(140px, 50%, 400px);
     height: auto;
 }
 
