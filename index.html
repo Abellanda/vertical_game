@@ -1238,6 +1238,9 @@
             if (rewardBtn) rewardBtn.style.display = "none";
             if (overlay) overlay.classList.remove("show");
             if (bgm && audioReady && !muted) bgm.play().catch(() => {});
+
+            const startBtn = document.getElementById("startBtn");
+            if (startBtn) startBtn.textContent = "Jugar";
           }
 
           function over() {
@@ -1261,6 +1264,10 @@
               im.style.height = "auto";
               titleEl.replaceChildren(im);
             }
+
+            const startBtn = document.getElementById("startBtn");
+            if (startBtn) startBtn.textContent = "Reintentar";
+
             if (subtitleEl) {
               subtitleEl.style.whiteSpace = "normal";
               subtitleEl.style.lineHeight = "1.35";

@@ -39,8 +39,7 @@
       height: 1920,
       bgSrc: "assets/ShareScore.png",
       textColor: "#ffffff",
-      strokeColor: "",
-      shadowColor: "",
+      shadowColor: "rgba(0,0,0,0.5)",
       family:
         "helvetica-neue-lt-pro-cond, sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif",
     },
@@ -77,8 +76,10 @@
 
       ctx.save();
       ctx.textAlign = "center";
-      ctx.shadowBlur = 0;
-      ctx.shadowColor = "transparent";
+      ctx.shadowColor = this.cfg.shadowColor;
+      ctx.shadowBlur = 1;
+      ctx.shadowOffsetX = 4;
+      ctx.shadowOffsetY = 4;
 
       const fontScorePx = Math.round(H * 0.1); // Tamaño de la fuente
       const fontLabelPx = Math.round(H * 0.025);
