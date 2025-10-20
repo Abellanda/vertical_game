@@ -796,11 +796,15 @@
             if (!S.running) return;
             const p = S.player;
             if (p.onGround || S.jumps < 2) {
+              const isSecondJump = !p.onGround && S.jumps === 1;
+
               p.vy = -G.jumpV;
               p.onGround = false;
               S.jumps++;
               p.state = "jump";
-              playSfx("sfxJump");
+              if (!(__IS_MOBILE__ && isSecondJump)) {
+                playSfx("sfxJump");
+              }
             }
           }
           addEventListener("keydown", (e) => {
