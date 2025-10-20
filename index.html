@@ -189,7 +189,6 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        /* ============== 1) ORIENTACIÓN: vertical SOLO móvil ============== */
         (() => {
           const isTouch = () =>
             "ontouchstart" in window || navigator.maxTouchPoints > 0;
@@ -292,7 +291,6 @@
           window.__applyOrientationGate = applyGate;
         })();
 
-        /* ============================ 2) JUEGO ============================ */
         (() => {
           // Canvas + escalado
           const c = document.getElementById("game");
@@ -464,8 +462,8 @@
           // Assets
           const assets = {
             bg: "assets/SkyBack.webp",
-            ground: "assets/BaseFront.webp", // piso trasero
-            groundFront: "assets/base.webp", // base frontal
+            ground: "assets/BaseFront.webp",
+            groundFront: "assets/base.webp",
             star: "assets/Star.webp",
             starBonus: "assets/GoodCloud.webp",
             groundMobile: "assets/BaseFront.webp",
@@ -521,7 +519,7 @@
           const G = {
             gravity: IS_VERTICAL ? 2600 : 2200,
             jumpV: IS_VERTICAL ? 980 : 860,
-            groundY: () => (IS_VERTICAL ? V.H * 0.86 : V.H * 0.78),
+            groundY: () => (IS_VERTICAL ? V.H * 0.8 : V.H * 0.78),
             baseSpeed: 290,
             maxSpeed: 1000,
             speedUpEach: 14,
@@ -544,8 +542,8 @@
           const BONUS_SIZE = { collisionR: 22, visualW: 3, visualH: 1.2 };
 
           function itemYRange() {
-            const gy = G.groundY(); // piso actual
-            const marginTop = IS_VERTICAL ? V.H * 0.34 : V.H * 0.28; // “altura” donde pueden aparecer
+            const gy = G.groundY();
+            const marginTop = IS_VERTICAL ? V.H * 0.34 : V.H * 0.28;
             const marginBottom = IS_VERTICAL ? V.H * 0.06 : V.H * 0.08;
             return [gy - marginTop, gy - marginBottom];
           }
@@ -723,9 +721,8 @@
           function applyLayerHeights() {
             if (!S) return;
 
-            // Alturas de las bandas base (ajusta al gusto)
-            const frontH = IS_VERTICAL ? Math.round(V.H * 0.155) : 120; // base.webp
-            const backH = IS_VERTICAL ? Math.round(V.H * 0.165) : 120; // BaseFront.webp
+            const frontH = IS_VERTICAL ? Math.round(V.H * 0.25) : 120; // base.webp
+            const backH = IS_VERTICAL ? Math.round(V.H * 0.195) : 120; // BaseFront.webp
 
             const gy = G.groundY();
 
