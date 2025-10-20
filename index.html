@@ -1,0 +1,1295 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="favicon/favicon-32x32.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="favicon/favicon-16x16.png" />
+    <link rel="icon" href="favicon/favicon.ico" />
+
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="favicon/apple-touch-icon.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="favicon/android-chrome-192x192.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="favicon/android-chrome-512x512.png" />
+    <link rel="manifest" href="favicon/site.webmanifest" />
+
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+
+    <title>¡PREPÁRATE PARA SER DUEÑO DEL CIELO!</title>
+    <meta
+      name="description"
+      content="¡ES MOMENTO DE VOLAR!, DEMUESTRA TU DESTREZA ESQUIVANDO OBSTÁCULOS Y ATRAPANDO TODAS LAS ESTRELLAS Y NUBES QUE PUEDAS" />
+    <meta
+      name="keywords"
+      content="juego, divertido, mini game, entretenimiento" />
+    <meta name="author" content="Pico Love" />
+
+    <script src="library/downloadImage.js"></script>
+    <link href="library/base.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.typekit.net/xkt8vij.css" />
+
+    <meta name="twitter:card" content="DUEÑO DEL CIELO" />
+    <meta name="twitter:title" content="DUEÑO DEL CIELO" />
+    <meta
+      name="twitter:description"
+      content="¡ES MOMENTO DE VOLAR!, DEMUESTRA TU DESTREZA ESQUIVANDO OBSTÁCULOS Y ATRAPANDO TODAS LAS ESTRELLAS Y NUBES QUE PUEDAS" />
+    <meta
+      name="twitter:image"
+      content="https://vetiver-y-amaretto.dueñodelcielo.com/assets/OpenGraph.png" />
+    <meta name="twitter:creator" content="@Humbe" />
+    <meta property="og:title" content="Dueño del cielo" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://vetiver-y-amaretto.dueñodelcielo.com/" />
+    <meta
+      property="og:image"
+      content="https://vetiver-y-amaretto.dueñodelcielo.com/assets/OpenGraph.png" />
+    <meta property="og:locale" content="es_MX" />
+
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-KNHK2GXM");
+    </script>
+    <!-- End Google Tag Manager -->
+  </head>
+  <body>
+    <!-- GTM (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-KNHK2GXM"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"></iframe
+    ></noscript>
+
+    <div id="wrap">
+      <canvas id="game"></canvas>
+
+      <div class="hud">
+        <div class="card">
+          <strong>Puntos:&nbsp;</strong><span id="points">0</span>
+        </div>
+        <div class="card">
+          <strong>Distancia:&nbsp;</strong>
+          <div><span id="meters">0</span> m</div>
+        </div>
+        <div class="card">
+          <strong>Recórd:&nbsp;</strong><span id="best">0</span>
+        </div>
+        <button
+          id="muteBtn"
+          class="card fontBody"
+          type="button"
+          aria-pressed="false"
+          aria-label="Silenciar sonido">
+          🔊
+        </button>
+      </div>
+
+      <div id="overlay" class="overlay" aria-live="polite">
+        <div>
+          <div id="title" class="animate float">
+            <img
+              src="assets/caza.webp"
+              alt="¡PREPÁRATE PARA SER DUEÑO DEL CIELO!"
+              style="width: clamp(140px, 20%, 400px)" />
+          </div>
+
+          <div id="subtitle" class="boxLigth">
+            <p style="padding-top: 0; margin-top: 5px">
+              <img
+                src="assets/GoodCloud.webp"
+                style="width: 18px; height: 13px"
+                alt="Dueño del Cielo" />
+              ¡PREPÁRATE PARA SER DUEÑO DEL CIELO!
+              <img
+                src="assets/GoodCloud.webp"
+                style="width: 18px; height: 13px"
+                alt="" />
+            </p>
+            <p
+              style="
+                display: flex;
+                gap: 5px;
+                justify-content: center;
+                margin-bottom: 0;
+              ">
+              <strong>Atrapa </strong>
+              <img
+                src="assets/Star.webp"
+                width="20"
+                style="height: auto"
+                alt="" />
+              <img
+                src="assets/GoodCloud.webp"
+                style="width: 18px; height: 13px"
+                alt="" />
+            </p>
+            <p style="margin-top: 0">
+              <strong>Evita los obstáculos </strong>
+              <img src="assets/BadCloud.webp" alt="" width="25" />
+              <img src="assets/Rayo.webp" alt="" width="20" />
+            </p>
+
+            <p class="deskText">
+              <strong>¿Cómo moverse?</strong><br />🖱️ Clic / Espacio para saltar
+            </p>
+            <p class="mobileText">
+              <strong>¿Comó moverse?</strong><br />👆 Tap para saltar
+            </p>
+          </div>
+          <p id="stats" class="stats" style="display: none"></p>
+          <div class="btn" id="startBtn">Jugar</div>
+        </div>
+      </div>
+    </div>
+
+    <audio
+      id="bgm"
+      src="assets/vetiver-y-amaretto.mp3"
+      preload="auto"
+      loop></audio>
+    <audio id="sfxJump" src="assets/jump.mp3" preload="auto"></audio>
+    <audio id="sfxStar" src="assets/collect.mp3" preload="auto"></audio>
+    <audio id="sfxBonus" src="assets/point.mp3" preload="auto"></audio>
+    <audio id="sfxOver" src="assets/lose.mp3" preload="auto"></audio>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        /* ============== 1) ORIENTACIÓN: vertical SOLO móvil ============== */
+        (() => {
+          const isTouch = () =>
+            "ontouchstart" in window || navigator.maxTouchPoints > 0;
+          const isMobileUA =
+            /Android|iPhone|iPad|iPod|IEMobile|Opera Mini/i.test(
+              navigator.userAgent
+            );
+          const isMobile = () => isTouch() && isMobileUA;
+          const isPortrait = () =>
+            window.matchMedia
+              ? window.matchMedia("(orientation: portrait)").matches
+              : window.innerHeight >= window.innerWidth;
+
+          const overlayGate = document.createElement("div");
+          overlayGate.id = "rotateOverlay";
+          overlayGate.setAttribute("aria-hidden", "true");
+          overlayGate.style.cssText =
+            "position:fixed;inset:0;display:none;place-items:center;background:#000c;z-index:99999;color:#fff;text-align:center;padding:24px;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;backdrop-filter:blur(2px)";
+          overlayGate.innerHTML = `
+            <div style="max-width:560px">
+              <div style="font-size:64px;line-height:1;margin-bottom:12px">🔁</div>
+              <h2 style="margin:0 0 6px;font-size:22px">Gira tu dispositivo</h2>
+              <p style="margin:0;opacity:.9">En móviles, este juego se juega en <b>vertical</b>.</p>
+            </div>`;
+          document.body.appendChild(overlayGate);
+
+          const bgm = document.getElementById("bgm");
+          const canvas = document.getElementById("game");
+          let bgmWasPlaying = false;
+          let rafGate;
+
+          function showGate() {
+            overlayGate.style.display = "grid";
+            overlayGate.setAttribute("aria-hidden", "false");
+            if (canvas) canvas.style.opacity = "0.001";
+            if (bgm) {
+              bgmWasPlaying = !bgm.paused;
+              try {
+                bgm.pause();
+              } catch {}
+            }
+          }
+          function hideGate() {
+            overlayGate.style.display = "none";
+            overlayGate.setAttribute("aria-hidden", "true");
+            if (canvas) canvas.style.opacity = "";
+            if (bgm && bgmWasPlaying) {
+              bgm.play().catch(() => {});
+            }
+          }
+
+          const applyGate = () => {
+            if (!isMobile()) {
+              hideGate();
+              return;
+            }
+            if (isPortrait()) hideGate();
+            else showGate();
+          };
+          const debouncedApplyGate = () => {
+            cancelAnimationFrame(rafGate);
+            rafGate = requestAnimationFrame(applyGate);
+          };
+
+          async function requestPortraitLock() {
+            try {
+              if (screen.orientation && screen.orientation.lock)
+                await screen.orientation.lock("portrait");
+            } catch {}
+          }
+
+          const startBtn = document.getElementById("startBtn");
+          if (startBtn)
+            startBtn.addEventListener(
+              "click",
+              () => {
+                requestPortraitLock();
+                debouncedApplyGate();
+              },
+              { passive: true }
+            );
+
+          window.addEventListener("resize", debouncedApplyGate, {
+            passive: true,
+          });
+          window.addEventListener(
+            "orientationchange",
+            () => setTimeout(debouncedApplyGate, 80),
+            { passive: true }
+          );
+          if (window.visualViewport)
+            visualViewport.addEventListener("resize", debouncedApplyGate, {
+              passive: true,
+            });
+          document.addEventListener("visibilitychange", () => {
+            if (document.visibilityState === "visible") debouncedApplyGate();
+          });
+
+          applyGate();
+          window.__applyOrientationGate = applyGate;
+        })();
+
+        /* ============================ 2) JUEGO ============================ */
+        (() => {
+          // Canvas + escalado
+          const c = document.getElementById("game");
+          const ctx = c.getContext("2d", { alpha: true });
+
+          const MOBILE =
+            ("ontouchstart" in window || navigator.maxTouchPoints > 0) &&
+            /Android|iPhone|iPad|iPod|IEMobile|Opera Mini/i.test(
+              navigator.userAgent
+            );
+          const IS_VERTICAL = MOBILE;
+
+          const V = IS_VERTICAL
+            ? { W: 540, H: 960, aspect: 9 / 16 }
+            : { W: 960, H: 540, aspect: 16 / 9 };
+
+          const PLAYER_X = IS_VERTICAL ? 60 : 120;
+
+          let DPR = 1,
+            SCALE = 1;
+          function getViewportSize() {
+            const vw = Math.floor(
+              window.visualViewport?.width ?? window.innerWidth
+            );
+            const vh = Math.floor(
+              window.visualViewport?.height ?? window.innerHeight
+            );
+            return { vw, vh };
+          }
+          // Estado
+          let S;
+          let canRestartAt = 0;
+          function fit() {
+            DPR = Math.min(2, window.devicePixelRatio || 1);
+            const { vw, vh } = getViewportSize();
+            SCALE = Math.min(vw / V.W, vh / V.H);
+            c.style.width = V.W * SCALE + "px";
+            c.style.height = V.H * SCALE + "px";
+            c.width = Math.round(V.W * DPR);
+            c.height = Math.round(V.H * DPR);
+            ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+            applyLayerHeights(); // ✅ aplicar alturas cada vez que se ajusta el canvas
+          }
+          addEventListener("resize", fit, { passive: true });
+          addEventListener("orientationchange", fit, { passive: true });
+          if (window.visualViewport)
+            visualViewport.addEventListener("resize", fit, { passive: true });
+          fit();
+
+          // Helpers
+          ctx.imageSmoothingEnabled = false;
+
+          /** Repite una textura en X manteniendo su AR */
+          function repeatXKeepAR(tex, scroll, y, targetH, viewportW = V.W) {
+            if (!tex || !tex.complete || !tex.naturalWidth) return 0;
+            const iw = tex.naturalWidth,
+              ih = tex.naturalHeight;
+            const s = targetH / ih; // escalar SOLO por alto
+            const dw = iw * s,
+              dh = targetH; // ancho proporcional, alto deseado
+            // normaliza el scroll al tamaño del tile
+            let x = scroll % dw;
+            if (x > 0) x -= dw;
+            for (let xx = x; xx < viewportW; xx += dw) {
+              ctx.drawImage(tex, 0, 0, iw, ih, xx, y, dw, dh);
+            }
+            return dw;
+          }
+
+          /** Fondo tipo cover (no se deforma) */
+          function drawCover(tex, W, H) {
+            if (!tex || !tex.complete || !tex.naturalWidth) return;
+            const iw = tex.naturalWidth,
+              ih = tex.naturalHeight;
+            const s = Math.max(W / iw, H / ih);
+            const dw = iw * s,
+              dh = ih * s;
+            const dx = (W - dw) / 2,
+              dy = (H - dh) / 2;
+            ctx.drawImage(tex, 0, 0, iw, ih, dx, dy, dw, dh);
+          }
+
+          const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+          const rand = (a, b) => a + Math.random() * (b - a);
+          function safeDraw(imgEl, ...args) {
+            if (!imgEl || !imgEl.complete || imgEl.naturalWidth === 0) return;
+            ctx.drawImage(imgEl, ...args);
+          }
+
+          function rrPath(ctx, x, y, w, h, r = 18) {
+            const R = Math.min(r, w / 2, h / 2);
+            ctx.beginPath();
+            ctx.moveTo(x + R, y);
+            ctx.lineTo(x + w - R, y);
+            ctx.quadraticCurveTo(x + w, y, x + w, y + R);
+            ctx.lineTo(x + w, y + h - R);
+            ctx.quadraticCurveTo(x + w, y + h, x + w - R, y + h);
+            ctx.lineTo(x + R, y + h);
+            ctx.quadraticCurveTo(x, y + h, x, y + h - R);
+            ctx.lineTo(x, y + R);
+            ctx.quadraticCurveTo(x, y, x + R, y);
+            ctx.closePath();
+          }
+
+          function drawSpeechBubble(text, x, y, maxW = 220) {
+            ctx.font = "bold 14px helvetica-neue-lt-pro-cond, system-ui, Arial";
+            const words = String(text).split(/\s+/);
+            const lines = [];
+            let line = "";
+            for (const w of words) {
+              const t = line ? line + " " + w : w;
+              if (ctx.measureText(t).width <= maxW) line = t;
+              else {
+                if (line) lines.push(line);
+                line = w;
+              }
+            }
+            if (line) lines.push(line);
+            const lh = 22,
+              padX = 12,
+              padY = 10;
+            const w = Math.min(
+              maxW,
+              Math.max(...lines.map((t) => ctx.measureText(t).width)) + padX * 2
+            );
+            const h = lines.length * lh + padY * 2;
+            const rx = x - w / 2,
+              ry = y - h,
+              r = 10;
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(rx + r, ry);
+            ctx.lineTo(rx + w - r, ry);
+            ctx.quadraticCurveTo(rx + w, ry, rx + w, ry + r);
+            ctx.lineTo(rx + w, ry + h - r);
+            ctx.quadraticCurveTo(rx + w, ry + h, rx + w - r, ry + h);
+            ctx.lineTo(x + 12, ry + h);
+            ctx.lineTo(x, ry + h + 8);
+            ctx.lineTo(x - 12, ry + h);
+            ctx.lineTo(rx + r, ry + h);
+            ctx.quadraticCurveTo(rx, ry + h, rx, ry + h - r);
+            ctx.lineTo(rx, ry + r);
+            ctx.quadraticCurveTo(rx, ry, rx + r, ry);
+            ctx.closePath();
+            ctx.shadowColor = "#0008";
+            ctx.shadowBlur = 2;
+            ctx.fillStyle = "#f2f2f2";
+            ctx.fill();
+            ctx.shadowBlur = 0;
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#faf";
+            ctx.stroke();
+            ctx.fillStyle = "#111";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            let yy = ry + padY + lh / 2;
+            for (const ln of lines) {
+              ctx.fillText(ln, x, yy);
+              yy += lh;
+            }
+            ctx.restore();
+          }
+
+          function bubbleTarget() {
+            const p = S.player;
+            return { x: p.x + p.w * 0.55, y: p.y - p.h - 50 };
+          }
+
+          // Assets
+          const assets = {
+            bg: "assets/SkyBack.webp",
+            ground: "assets/BaseFront.webp", // piso trasero
+            groundFront: "assets/base.webp", // base frontal
+            star: "assets/Star.webp",
+            starBonus: "assets/GoodCloud.webp",
+            obstacle: "assets/Rayo.webp",
+            meteor: "assets/meteorito.webp",
+            bird: "assets/BadCloud.webp",
+            player: {
+              runL: "assets/HumbeLeft.webp",
+              runR: "assets/HumbeRigth.webp",
+              jump: "assets/HumbeJump.webp",
+            },
+            gameOverImg: "assets/GAMEOVER.webp",
+          };
+          const METEOR_W = 500,
+            METEOR_H = 401,
+            METEOR_AR = METEOR_W / METEOR_H;
+          const PLAYER_VOFFSET = 6,
+            BLOCK_VOFFSET = 6;
+
+          function loadImage(src) {
+            const i = new Image();
+            i.decoding = "async";
+            i.loading = "eager";
+            i.src = src;
+            return i;
+          }
+          const img = {
+            bg: loadImage(assets.bg),
+            ground: loadImage(assets.ground),
+            groundFront: loadImage(assets.groundFront),
+            star: loadImage(assets.star),
+            starBonus: loadImage(assets.starBonus),
+            obstacle: loadImage(assets.obstacle),
+            meteor: loadImage(assets.meteor),
+            bird: loadImage(assets.bird),
+            player: {
+              runL: loadImage(assets.player.runL),
+              runR: loadImage(assets.player.runR),
+              jump: loadImage(assets.player.jump),
+            },
+          };
+
+          // Física / Juego (ajustada para móvil)
+          const G = {
+            gravity: IS_VERTICAL ? 2600 : 2200,
+            jumpV: IS_VERTICAL ? 980 : 860,
+            groundY: () => (IS_VERTICAL ? V.H * 0.9 : V.H * 0.78),
+            baseSpeed: 290,
+            maxSpeed: 1000,
+            speedUpEach: 14,
+            speedUpDelta: 28,
+            starEvery: IS_VERTICAL ? [1.2, 2.6] : [1.0, 2.0],
+            obsEvery: IS_VERTICAL ? [1.8, 3.6] : [1.5, 3.2],
+          };
+
+          const BONUS = {
+            prob: 0.18,
+            speedMul: 1.35,
+            ampX: IS_VERTICAL ? 14 : 18,
+            ampY: IS_VERTICAL ? 66 : 66,
+            freq: 1.6,
+            driftY: IS_VERTICAL ? -14 : -12,
+            jitter: 18,
+          };
+
+          const STAR_SIZE = { collisionR: 18, visualScale: 1 };
+          const BONUS_SIZE = { collisionR: 22, visualW: 3, visualH: 1.2 };
+
+          function itemYRange() {
+            return IS_VERTICAL
+              ? [V.H * 0.56, V.H * 0.84]
+              : [V.H * 0.5, V.H * 0.72];
+          }
+          function birdYRange() {
+            return IS_VERTICAL
+              ? [V.H * 0.58, V.H * 0.72]
+              : [V.H * 0.52, V.H * 0.64];
+          }
+
+          // Frases
+          const PHRASES = Array.isArray(window.PHRASES)
+            ? window.PHRASES
+            : [
+                "NO QUIERO VER QUE ME FALTES AQUÍ",
+                "¿TÚ MORIRÍAS POR MÍ?",
+                "ME IMAGINO QUE ESTOY CONTIGO",
+                "AHORA PUDE SER YO",
+                "TODO LO QUE YO ERA TE LO DI",
+                "COMO ODIO ESTE CUARTO VACÍO",
+              ];
+          function makeShuffledBag(arr) {
+            const a = (Array.isArray(arr) ? arr : []).filter((v) => v != null);
+            for (let i = a.length - 1; i > 0; i--) {
+              const j = (Math.random() * (i + 1)) | 0;
+              [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+          }
+
+          // Audio
+          const muteBtn = document.getElementById("muteBtn");
+          const bgm = document.getElementById("bgm");
+          const MASTER_VOLUME = 0.06,
+            BGM_VOLUME = 0.25;
+          const __IS_MOBILE__ = MOBILE;
+          const sfxIds = __IS_MOBILE__
+            ? ["sfxJump", "sfxOver"]
+            : ["sfxJump", "sfxStar", "sfxBonus", "sfxOver"];
+          let audioReady = false,
+            muted = localStorage.getItem("humbe_muted") === "1";
+          function updateMuteButton() {
+            if (!muteBtn) return;
+            muteBtn.setAttribute("aria-pressed", muted ? "true" : "false");
+            muteBtn.setAttribute(
+              "aria-label",
+              muted ? "Activar sonido" : "Silenciar sonido"
+            );
+            muteBtn.textContent = muted ? "🔇" : "🔊";
+          }
+          function applyMuteState() {
+            if (bgm) {
+              bgm.muted = muted;
+              bgm.volume = muted ? 0 : BGM_VOLUME;
+              if (muted) {
+                try {
+                  bgm.pause();
+                } catch {}
+              } else if (audioReady) {
+                bgm.play().catch(() => {});
+              }
+            }
+            sfxIds.forEach((id) => {
+              const a = document.getElementById(id);
+              if (!a) return;
+              if (__IS_MOBILE__ && (id === "sfxStar" || id === "sfxBonus")) {
+                a.muted = true;
+                a.volume = 0;
+                try {
+                  a.pause();
+                  a.currentTime = 0;
+                } catch {}
+                return;
+              }
+              a.muted = muted;
+              a.volume = muted ? 0 : MASTER_VOLUME;
+            });
+          }
+          function primeAudioEl(a) {
+            if (!a) return;
+            const vol = a.volume;
+            a.volume = 0;
+            a.currentTime = 0;
+            a.play()
+              .then(() => {
+                a.pause();
+                a.currentTime = 0;
+                a.volume = vol;
+              })
+              .catch(() => {
+                a.volume = vol;
+              });
+          }
+          async function unlockAudio() {
+            if (audioReady) return;
+            audioReady = true;
+            try {
+              sfxIds.forEach((id) => {
+                const a = document.getElementById(id);
+                if (!a) return;
+                a.volume = MASTER_VOLUME;
+                primeAudioEl(a);
+              });
+              if (bgm) {
+                bgm.volume = BGM_VOLUME;
+                bgm.muted = muted;
+                if (!muted) await bgm.play().catch(() => {});
+              }
+            } catch (e) {
+              console.warn("Audio init:", e);
+            }
+            updateMuteButton();
+          }
+          function playSfx(id) {
+            if (__IS_MOBILE__ && (id === "sfxStar" || id === "sfxBonus"))
+              return;
+            if (muted || !audioReady) return;
+            const a = document.getElementById(id);
+            if (!a) return;
+            try {
+              a.currentTime = 0;
+              a.volume = MASTER_VOLUME;
+              a.play().catch(() => {});
+            } catch {}
+          }
+          if (muteBtn) {
+            muteBtn.addEventListener("click", () => {
+              muted = !muted;
+              localStorage.setItem("humbe_muted", muted ? "1" : "0");
+              updateMuteButton();
+              applyMuteState();
+            });
+          }
+          updateMuteButton();
+          applyMuteState();
+          window.addEventListener(
+            "pointerdown",
+            () => {
+              unlockAudio();
+              applyMuteState();
+            },
+            { once: true, passive: true }
+          );
+          window.addEventListener(
+            "keydown",
+            (e) => {
+              if (["Enter", "Space", "ArrowUp"].includes(e.code)) {
+                unlockAudio();
+                applyMuteState();
+              }
+            },
+            { once: true }
+          );
+
+          window.AudioMixers = {
+            get muted() {
+              return muted;
+            },
+            setMuted(v) {
+              muted = !!v;
+              localStorage.setItem("humbe_muted", muted ? "1" : "0");
+              updateMuteButton();
+              applyMuteState();
+            },
+            playSfx,
+          };
+
+          // UI refs
+          const overlay = document.getElementById("overlay");
+          const subtitleEl = document.getElementById("subtitle");
+          const statsEl = document.getElementById("stats");
+          const startBtn = document.getElementById("startBtn");
+
+          function applyLayerHeights() {
+            if (!S) return;
+
+            const frontH = IS_VERTICAL ? Math.round(V.H * 0.165) : 120; // base.webp
+            const backH = IS_VERTICAL ? Math.round(V.H * 0.175) : 120; // BaseFront.webp
+            if (S) {
+              S.front.h = frontH;
+              S.front.y = G.groundY();
+              S.groundScroll.h = backH;
+              S.groundScroll.y = IS_VERTICAL
+                ? Math.round(V.H * 0.76)
+                : Math.round(V.H * 0.66);
+            }
+          }
+
+          function reset() {
+            S = {
+              t: 0,
+              running: false,
+              score: 0,
+              meters: 0,
+              stars: 0,
+              best: Number(localStorage.getItem("bestPoints") || 0),
+              speed: G.baseSpeed,
+              lastStar: 0,
+              lastObs: 0,
+              lastSpeedUp: 0,
+              jumps: 0,
+              player: {
+                x: PLAYER_X,
+                y: G.groundY(),
+                w: 72,
+                h: 72,
+                vy: 0,
+                onGround: true,
+                state: "runL",
+                frameTimer: 0,
+                runFps: 10,
+              },
+              obs: [],
+              items: [],
+              particles: [],
+              front: {
+                x: 0,
+                speedMul: 1.15,
+                y: G.groundY(),
+                h: IS_VERTICAL ? 132 : 120,
+                alpha: 1,
+              },
+              groundScroll: {
+                x: 0,
+                y: IS_VERTICAL ? V.H * 0.76 : V.H * 0.66,
+                h: IS_VERTICAL ? 140 : 120,
+                speedPx: 80,
+              },
+              bubble: null,
+              phraseBag: makeShuffledBag(PHRASES || []),
+            };
+            applyLayerHeights();
+          }
+          reset();
+
+          function nextPhrase() {
+            if (!S.phraseBag || S.phraseBag.length === 0)
+              S.phraseBag = makeShuffledBag(PHRASES);
+            const msg = S.phraseBag.pop();
+            return typeof msg === "string" ? msg : "";
+          }
+
+          // Input
+          function jump() {
+            if (!S.running) return;
+            const p = S.player;
+            if (p.onGround || S.jumps < 2) {
+              p.vy = -G.jumpV;
+              p.onGround = false;
+              S.jumps++;
+              p.state = "jump";
+              playSfx("sfxJump");
+            }
+          }
+          addEventListener("keydown", (e) => {
+            if (["Space", "Enter", "ArrowUp"].includes(e.code)) {
+              e.preventDefault();
+              e.stopPropagation();
+            }
+            if (S?.running && (e.code === "Space" || e.code === "ArrowUp"))
+              jump();
+          });
+          c.addEventListener("pointerdown", (e) => {
+            e.preventDefault();
+            if (S.running) jump();
+          });
+          const jumpBtnEl = document.getElementById("jumpBtn");
+          if (jumpBtnEl)
+            jumpBtnEl.addEventListener("pointerdown", (e) => {
+              e.preventDefault();
+              if (S.running) jump();
+            });
+
+          if (startBtn) {
+            startBtn.onclick = (ev) => {
+              ev.stopPropagation();
+              if (performance.now() >= canRestartAt) start();
+            };
+          }
+
+          // Spawns
+          function spawn(dt) {
+            S.lastStar += dt;
+            S.lastObs += dt;
+            S.lastSpeedUp += dt;
+            if (S.lastSpeedUp >= G.speedUpEach) {
+              S.speed = Math.min(G.maxSpeed, S.speed + G.speedUpDelta);
+              S.lastSpeedUp = 0;
+            }
+            if (S.lastStar >= rand(...G.starEvery)) {
+              const [minY, maxY] = itemYRange();
+              const isBonus = Math.random() < BONUS.prob;
+              S.items.push({
+                type: isBonus ? "bonus" : "star",
+                x: V.W + 40,
+                y: rand(minY, maxY),
+                r: isBonus ? BONUS_SIZE.collisionR : STAR_SIZE.collisionR,
+                vScale: isBonus ? 1 : STAR_SIZE.visualScale || 1,
+                vW: isBonus ? BONUS_SIZE.visualW : 0,
+                vH: isBonus ? BONUS_SIZE.visualH : 0,
+                vx: S.speed * (isBonus ? BONUS.speedMul : 1.0),
+                t: 0,
+                phase: rand(0, Math.PI * 2),
+                ampX: BONUS.ampX * rand(0.6, 1.4),
+                ampY: BONUS.ampY * rand(0.6, 1.4),
+                freq: BONUS.freq * rand(0.7, 1.3),
+                driftY: BONUS.driftY * rand(0.6, 1.4),
+                jitter: BONUS.jitter,
+              });
+              S.lastStar = 0;
+            }
+            if (S.lastObs >= rand(...G.obsEvery)) {
+              const r = Math.random();
+              if (r < 0.55) {
+                S.obs.push({
+                  type: "block",
+                  x: V.W + 40,
+                  y: G.groundY(),
+                  w: 60,
+                  h: 60,
+                  vx: S.speed,
+                });
+              } else if (r < 0.85) {
+                const [bMinY, bMaxY] = birdYRange();
+                S.obs.push({
+                  type: "bird",
+                  x: V.W + 40,
+                  y: rand(bMinY, bMaxY),
+                  w: 60,
+                  h: 40,
+                  vx: S.speed,
+                  flap: 0,
+                });
+              } else {
+                const startX = rand(V.W * 0.7, V.W + 80);
+                const startY = rand(
+                  IS_VERTICAL ? -60 : -120,
+                  IS_VERTICAL ? 40 : -40
+                );
+                const speed = rand(380, 520),
+                  fall = rand(280, 380);
+                const destH = 26 * 2.3,
+                  destW = destH * METEOR_AR;
+                S.obs.push({
+                  type: "meteor",
+                  x: startX,
+                  y: startY,
+                  vx: speed,
+                  vy: fall,
+                  dw: destW,
+                  dh: destH,
+                  rcx: -0.24,
+                  rcy: 0.08,
+                  rr: 0.18,
+                });
+              }
+              S.lastObs = 0;
+            }
+          }
+
+          // Colisiones / partículas
+          const clampR = (cx, cy, r, rx, ry, rw, rh) => {
+            const nx = clamp(cx, rx, rx + rw),
+              ny = clamp(cy, ry, ry + rh);
+            const dx = cx - nx,
+              dy = cy - ny;
+            return dx * dx + dy * dy <= r * r;
+          };
+          const aabb = (a, b) =>
+            a.x < b.x + b.w &&
+            a.x + a.w > b.x &&
+            a.y < b.y + b.h &&
+            a.y + a.h > b.y;
+
+          function puff(x, y, n = 6) {
+            for (let i = 0; i < n; i++) {
+              S.particles.push({
+                type: "note",
+                x,
+                y,
+                vx: rand(-120, 120),
+                vy: rand(-220, -80),
+                s: rand(18, 28),
+                rot: rand(-0.35, 0.35),
+                life: rand(0.8, 1.2),
+              });
+            }
+          }
+
+          // Loop
+          let last = performance.now();
+          function update(dt) {
+            S.t += dt;
+            S.meters += S.speed * dt * 0.06;
+
+            if (S.bubble && S.bubble.lockToPlayer) {
+              const t = bubbleTarget();
+              const followSpeed = 12;
+              S.bubble.x += (t.x - S.bubble.x) * Math.min(1, dt * followSpeed);
+              S.bubble.y += (t.y - S.bubble.y) * Math.min(1, dt * followSpeed);
+              S.bubble.x = clamp(S.bubble.x, 16, V.W - 16);
+              S.bubble.y = clamp(S.bubble.y, 16, V.H - 16);
+            }
+
+            // Física
+            const p = S.player;
+            p.vy += G.gravity * dt;
+            p.y += p.vy * dt;
+            if (p.y > G.groundY()) {
+              p.y = G.groundY();
+              p.vy = 0;
+              p.onGround = true;
+              S.jumps = 0;
+              if (p.state === "jump") p.state = "runL";
+            } else p.onGround = false;
+
+            // Animación
+            if (p.onGround) {
+              p.frameTimer += dt;
+              if (p.frameTimer >= 1 / p.runFps) {
+                p.state = p.state === "runL" ? "runR" : "runL";
+                p.frameTimer = 0;
+              }
+            } else p.state = "jump";
+
+            spawn(dt);
+
+            // Mover obs/items
+            S.obs.forEach((o) => {
+              if (o.type === "bird" || o.type === "block") {
+                o.x -= o.vx * dt;
+                if (o.type === "bird") {
+                  o.flap += dt * 9;
+                  o.y += Math.sin(S.t * 4 + o.x * 0.02) * 0.6;
+                }
+              } else if (o.type === "meteor") {
+                o.x -= o.vx * dt;
+                o.y += o.vy * dt;
+              }
+            });
+            S.items.forEach((i) => {
+              i.x -= i.vx * dt;
+              if (i.type === "bonus") {
+                i.t += dt;
+                i.x += Math.cos(i.phase + i.t * i.freq) * (i.ampX * dt);
+                i.y += Math.sin(i.phase * 0.7 + i.t * i.freq) * (i.ampY * dt);
+                i.y += i.driftY * dt;
+                if (Math.random() < 0.05)
+                  i.y += rand(-i.jitter, i.jitter) * 0.05;
+                i.y = clamp(
+                  i.y,
+                  IS_VERTICAL ? V.H * 0.56 : V.H * 0.35,
+                  IS_VERTICAL ? V.H * 0.88 : V.H * 0.78
+                );
+              }
+            });
+
+            // Parallax (❌ sin wrap por V.W; el helper normaliza con %)
+            S.front.x -= S.speed * S.front.speedMul * dt;
+            S.groundScroll.x -= S.groundScroll.speedPx * dt;
+
+            // Área jugador
+            const pr = {
+              x: p.x + p.w * 0.15,
+              y: p.y - p.h + 5,
+              w: p.w * 0.7,
+              h: p.h - 10,
+            };
+
+            // Items
+            for (let i = S.items.length - 1; i >= 0; i--) {
+              const s = S.items[i];
+              if (clampR(s.x, s.y, s.r, pr.x, pr.y, pr.w, pr.h)) {
+                S.stars++;
+                if (s.type === "bonus") {
+                  S.score += 120;
+                  puff(s.x, s.y, 8);
+                  S.particles.push({
+                    x: s.x,
+                    y: s.y - 60,
+                    vx: 0,
+                    vy: 0,
+                    r: 0,
+                    life: 0.8,
+                    text: "+120",
+                    color: "#2519e3",
+                    stroke: "#3b2f00",
+                  });
+                  playSfx("sfxBonus");
+                } else {
+                  S.score += 10;
+                  puff(s.x, s.y, 5);
+                  playSfx("sfxStar");
+                }
+                if (S.stars % 4 === 0) {
+                  const msg = nextPhrase();
+                  const t = bubbleTarget();
+                  S.bubble = {
+                    text: msg,
+                    time: 3.3,
+                    x: t.x,
+                    y: t.y,
+                    lockToPlayer: true,
+                  };
+                }
+                S.items.splice(i, 1);
+              } else if (s.x < -80) S.items.splice(i, 1);
+            }
+
+            // Colisiones letales
+            for (const o of S.obs) {
+              if (o.type === "meteor") {
+                const mw = o.dw ?? (o.dh ? o.dh * METEOR_AR : METEOR_W);
+                const mh = o.dh ?? (o.dw ? o.dw / METEOR_AR : METEOR_H);
+                const cx = o.x + mw * (o.rcx ?? -0.24);
+                const cy = o.y + mh * (o.rcy ?? 0.08);
+                const rr = mh * (o.rr ?? 0.18);
+                if (clampR(cx, cy, rr, pr.x, pr.y, pr.w, pr.h)) return over();
+                continue;
+              }
+              const ob = {
+                x: o.x + o.w * 0.1,
+                y: o.y - o.h,
+                w: o.w * 0.8,
+                h: o.h,
+              };
+              if (aabb(pr, ob)) {
+                if (o.type === "bird" && p.y < o.y - o.h / 2) continue;
+                return over();
+              }
+            }
+
+            // Partículas
+            S.obs = S.obs.filter((o) => o.x > -120 && o.y < V.H + 140);
+            for (let i = S.particles.length - 1; i >= 0; i--) {
+              const pa = S.particles[i];
+              pa.life -= dt;
+              if (pa.life <= 0) {
+                S.particles.splice(i, 1);
+                continue;
+              }
+              pa.x += pa.vx * dt;
+              pa.y += pa.vy * dt;
+              pa.vy += 900 * dt;
+            }
+
+            if (S.bubble) {
+              S.bubble.time -= dt;
+              if (S.bubble.time <= 0) S.bubble = null;
+            }
+          }
+
+          function draw() {
+            ctx.clearRect(0, 0, V.W, V.H);
+
+            // Fondo
+            drawCover(img.bg, V.W, V.H);
+
+            // Suelo trasero (BaseFront.webp) — SIN deformar
+            repeatXKeepAR(
+              img.ground,
+              S.groundScroll.x,
+              S.groundScroll.y,
+              S.groundScroll.h
+            );
+
+            // Items
+            for (const s of S.items) {
+              const isBonus = s.type === "bonus";
+              const spr = isBonus ? img.starBonus : img.star;
+              if (isBonus) {
+                const w = s.r * (s.vW || 3.2),
+                  h = s.r * (s.vH || 1.6);
+                safeDraw(spr, s.x - w / 2, s.y - h / 2, w, h);
+              } else {
+                const scale = s.vScale || 1,
+                  rr = s.r * scale;
+                safeDraw(spr, s.x - rr, s.y - rr, rr * 2, rr * 2);
+              }
+            }
+
+            // Obstáculos
+            for (const o of S.obs) {
+              if (o.type === "bird")
+                safeDraw(img.bird, o.x, o.y - o.h, o.w, o.h);
+              else if (o.type === "meteor") {
+                const m = img.meteor,
+                  iw = m.width || METEOR_W,
+                  ih = m.height || METEOR_H;
+                const DW = o.dw ?? (o.dh ? o.dh * METEOR_AR : iw);
+                const DH = o.dh ?? (o.dw ? o.dw / METEOR_AR : ih);
+                safeDraw(m, 0, 0, iw, ih, o.x - DW / 2, o.y - DH / 2, DW, DH);
+              } else {
+                safeDraw(
+                  img.obstacle,
+                  o.x,
+                  o.y - o.h + BLOCK_VOFFSET,
+                  o.w,
+                  o.h
+                );
+              }
+            }
+
+            // Jugador
+            const p = S.player;
+            const sprite =
+              p.state === "runL"
+                ? img.player.runL
+                : p.state === "runR"
+                  ? img.player.runR
+                  : img.player.jump;
+            ctx.save();
+            const tilt = p.onGround ? 0 : clamp(p.vy / 900, -0.6, 0.6);
+            ctx.translate(p.x + p.w / 2, p.y - p.h / 2 + PLAYER_VOFFSET);
+            ctx.rotate(tilt);
+            safeDraw(sprite, -p.w / 2, -p.h / 2, p.w, p.h);
+            ctx.restore();
+
+            if (S.bubble)
+              drawSpeechBubble(S.bubble.text, S.bubble.x, S.bubble.y);
+
+            // Partículas
+            for (const pa of S.particles) {
+              ctx.globalAlpha = Math.max(0, Math.min(1, pa.life));
+              if (pa.text) {
+                ctx.font =
+                  "bold 18px helvetica-neue-lt-pro-cond, system-ui, Arial";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillStyle = pa.color || "#2d3b97";
+                ctx.fillText(pa.text, pa.x, pa.y);
+              } else {
+                ctx.save();
+                ctx.translate(pa.x, pa.y);
+                ctx.rotate(pa.rot || 0);
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.font = `bold ${Math.round(pa.s)}px helvetica-neue-lt-pro-cond, system-ui, Apple Color Emoji, Segoe UI Emoji, Arial`;
+                ctx.fillStyle = "#ffd33d";
+                ctx.strokeStyle = "#c99b1a";
+                ctx.lineWidth = 3;
+                const glyph = "♪";
+                ctx.fillText(glyph, 0, 0);
+                ctx.strokeText(glyph, 0, 0);
+                ctx.restore();
+              }
+              ctx.globalAlpha = 1;
+            }
+
+            // Base frontal (base.webp) — SIN deformar
+            repeatXKeepAR(img.groundFront, S.front.x, S.front.y, S.front.h);
+
+            // HUD DOM
+            const pNow = Math.floor(S.score),
+              mNow = Math.floor(S.meters);
+            if (pointsEl && pointsEl.textContent != pNow)
+              pointsEl.textContent = pNow;
+            if (metersEl && metersEl.textContent != mNow)
+              metersEl.textContent = mNow;
+            if (bestEl && bestEl.textContent != S.best)
+              bestEl.textContent = S.best;
+          }
+
+          // HUD refs
+          const pointsEl = document.getElementById("points");
+          const metersEl = document.getElementById("meters");
+          const bestEl = document.getElementById("best");
+
+          // Ciclo
+          function loop(now) {
+            try {
+              const dt = Math.min((now - last) / 1000, 0.033);
+              last = now;
+              if (S.running) update(dt);
+              draw();
+            } catch (err) {
+              console.error(err);
+              if (overlay) overlay.classList.add("show");
+              if (statsEl) {
+                statsEl.style.display = "block";
+                statsEl.textContent = "Error: " + (err?.message || String(err));
+              }
+            }
+            requestAnimationFrame(loop);
+          }
+          requestAnimationFrame(loop);
+
+          // Lifecycle
+          function start() {
+            reset();
+            S.running = true;
+            window.Poster?.hide();
+            const titleEl = document.getElementById("title");
+            if (titleEl) titleEl.replaceChildren("¡A correr!");
+            if (subtitleEl) {
+              subtitleEl.textContent = IS_VERTICAL
+                ? "Evita obstáculos y atrapa estrellas. Toca la pantalla para saltar. Doble salto habilitado."
+                : "Evita obstáculos, atrapa estrellas. Toca / Espacio / ↑ para saltar. Doble salto habilitado.";
+            }
+            if (statsEl) statsEl.style.display = "none";
+            const rewardBtn = document.getElementById("rewardBtn");
+            if (rewardBtn) rewardBtn.style.display = "none";
+            if (overlay) overlay.classList.remove("show");
+            if (bgm && audioReady && !muted) bgm.play().catch(() => {});
+          }
+
+          function over() {
+            S.running = false;
+            const finalPoints = Math.floor(S.score);
+            if (finalPoints > S.best) {
+              S.best = finalPoints;
+              localStorage.setItem("bestPoints", String(S.best));
+            }
+
+            const titleEl = document.getElementById("title");
+            if (titleEl) {
+              const im = new Image();
+              im.src = assets.gameOverImg;
+              im.alt = "Game Over";
+              im.decoding = "async";
+              im.loading = "lazy";
+              im.style.display = "block";
+              im.style.margin = "12px auto 0";
+              im.style.maxWidth = "clamp(140px,20%,400px)";
+              im.style.height = "auto";
+              titleEl.replaceChildren(im);
+            }
+            if (subtitleEl) {
+              subtitleEl.style.whiteSpace = "normal";
+              subtitleEl.style.lineHeight = "1.35";
+              subtitleEl.innerHTML = `
+                <div style="display:grid;gap:10px;place-items:center;text-align:center;padding:15px;">
+                  <p style="margin:0;font-weight:300;">¡Te caíste entre las nubes! Pero cada caída te acerca más al cielo.</p>
+                  <p style="margin:5px;font-weight:300;">Puntos: ${finalPoints} · Distancia: ${Math.floor(S.meters)} m · Récord: ${S.best}</p>
+                  <p style="margin:0;font-weight:300!important;">Comparte tu logro en Instagram con <strong>#DuseñoDelCielo</strong> y <strong>@Humbe</strong> ☁️💫</p>
+                </div>`;
+            }
+            if (statsEl) statsEl.style.display = "none";
+            if (overlay) overlay.classList.add("show");
+
+            canRestartAt = performance.now() + 600;
+
+            window.Poster?.show?.({
+              score: finalPoints,
+              best: S.best,
+              meters: Math.floor(S.meters),
+              hashtag: "#CazaNubes",
+              logoSrc: "assets/caza.webp",
+            });
+            playSfx("sfxOver");
+          }
+
+          window.GameAPI = { start, over };
+          if (overlay) overlay.classList.add("show"); // overlay inicial
+        })();
+      });
+    </script>
+  </body>
+</html>
