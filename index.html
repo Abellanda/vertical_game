@@ -1300,12 +1300,14 @@
           }
 
           function handleHidden() {
-            // recuerda si el juego corría
-            pauseAllAudio(); // pausa música y sfx
+            // __wasRunning = !!(S && S.running);
+            // if (S) S.running = false;
+            pauseAllAudio();
           }
 
           function handleVisible() {
-            resumeAudioIfNeeded(); // reanuda música si estaba sonando
+            resumeAudioIfNeeded();
+            // if (__wasRunning && S) S.running = true;
           }
 
           // Page Visibility (cuando la pestaña deja de estar al frente)
@@ -1358,7 +1360,7 @@
                 <div style="display:grid;gap:10px;place-items:center;text-align:center;padding:15px;">
                   <p style="margin:0;font-weight:300;">¡Te caíste entre las nubes! Pero cada caída te acerca más al cielo.</p>
                   <p style="margin:5px;font-weight:300;">Puntos: ${finalPoints} · Distancia: ${Math.floor(S.meters)} m · Récord: ${S.best}</p>
-                  <p style="margin:0;font-weight:300!important;">Comparte tu logro en Instagram con <strong>#DuseñoDelCielo</strong> y <strong>@Humbe</strong> ☁️💫</p>
+                  <p style="margin:0;font-weight:300!important;">Comparte tu logro en Instagram con <strong>#DueñoDelCielo</strong> y <strong>@Humbe</strong> ☁️💫</p>
                 </div>`;
             }
             if (statsEl) statsEl.style.display = "none";
