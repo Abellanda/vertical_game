@@ -163,7 +163,7 @@
           console.error(err);
           alert("No se pudo generar la imagen.");
         } finally {
-          btn.textContent = "Descargar imagen";
+          btn.textContent = "Descargar score";
           btn.style.opacity = "1";
         }
       };

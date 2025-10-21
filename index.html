@@ -1267,6 +1267,65 @@
             if (startBtn) startBtn.textContent = "Jugar";
           }
 
+          // --- Auto-pausa/reanudación al salir/volver a la app/pestaña ---
+          let __wasBgmPlaying = false;
+          let __wasRunning = false;
+
+          function pauseAllAudio() {
+            if (bgm && !bgm.paused) {
+              __wasBgmPlaying = true;
+              try {
+                bgm.pause();
+              } catch {}
+            } else {
+              __wasBgmPlaying = false;
+            }
+            // detener SFX que pudieran estar en reproducción
+            (sfxIds || []).forEach((id) => {
+              const a = document.getElementById(id);
+              if (!a) return;
+              try {
+                a.pause();
+                // opcional: a.currentTime = 0; // si quieres reiniciarlos
+              } catch {}
+            });
+          }
+
+          function resumeAudioIfNeeded() {
+            if (bgm && __wasBgmPlaying && !muted) {
+              bgm.play().catch(() => {
+                /* ignorar error de autoplay */
+              });
+            }
+          }
+
+          function handleHidden() {
+            // recuerda si el juego corría
+            pauseAllAudio(); // pausa música y sfx
+          }
+
+          function handleVisible() {
+            resumeAudioIfNeeded(); // reanuda música si estaba sonando
+          }
+
+          // Page Visibility (cuando la pestaña deja de estar al frente)
+          document.addEventListener(
+            "visibilitychange",
+            () => {
+              if (document.visibilityState === "hidden") handleHidden();
+              else handleVisible();
+            },
+            { passive: true }
+          );
+
+          // También cubre cambios de foco de ventana (desktop)
+          window.addEventListener("blur", handleHidden, { passive: true });
+          window.addEventListener("focus", handleVisible, { passive: true });
+
+          // iOS Safari / Android: cambio de app o cerrar vista
+          window.addEventListener("pagehide", handleHidden, { passive: true });
+          window.addEventListener("pageshow", handleVisible, { passive: true });
+
           function over() {
             S.running = false;
             const finalPoints = Math.floor(S.score);
